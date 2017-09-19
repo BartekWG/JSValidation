@@ -7,15 +7,46 @@
 		<script type="text/javascript">
 			function validate() {
 				if (document.formularz.subject.value == "") {
-					alert("Wybierz temat z listy!");
+					alert("Choose subject from list!");
 					document.formularz.subject.focus();
 					return false;
 				}
 			}
 
-			function fname() {
+			function fname(el) {
 				var imie = document.formularz.name.value;
-				var wzor = 
+				var wzor = /^[A-Z]{1}[a-z]{2,15} (([A-Z]{1}[a-z]{2,20}\-[A-Z]{1}[a-z]{2,20})|([A-Z]{1}[a-z]{2,20}))$/;
+
+				if(!wzor.test(imie)) {
+					el.style.border = '3px solid red';
+					return false;
+				} else {
+					el.style.border = '3px solid green';
+				}
+			}
+
+			function femail(el) {
+				var email = document.formularz.email.value;
+				var wzor = /^[0-9a-z]{1}([0-9a-z])*\.?([0-9a-z])*\@([0-9a-z])+\.([0-9a-z])+$/
+
+				if(!wzor.test(email)) {
+					el.style.border = '3px solid red';
+					return false;
+				} else {
+					el.style.border = '3px solid green';
+				}
+			}
+
+			function fphone(el) {
+				var phone = document.formularz.phone.value;
+				var wzor = /^\d{9}$/
+
+				if(!wzor.test(phone)) {
+					el.style.border = '3px solid red';
+					return false;
+				} else {
+					el.style.border = '3px solid green';
+				}
 			}
 		</script>
 	</head>
@@ -27,15 +58,15 @@
 				<form name="formularz" onsubmit="return validate()">
 					<div class="form-group">
 						<label for="name">Your name: </label>
-						<input type="text" class="form-control" id="name" pattern="^[A-Z]{1}[a-z]{2,15} (([A-Z]{1}[a-z]{2,20}\-[A-Z]{1}[a-z]{2,20})|([A-Z]{1}[a-z]{2,20}))" placeholder="Enter your name" name="name" onblur="fname()" required>
+						<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" onchange="fname(this)" required>
 					</div>
 					<div class="form-group">
 						<label for="email">Email: </label>
-						<input type="text" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+						<input type="text" class="form-control" id="email" placeholder="Enter your email" name="email" onchange="femail(this)" required>
 					</div>
 					<div class="form-group">
 						<label for="name">Phone: </label>
-						<input type="phone" class="form-control" id="phone" placeholder="Enter your phone" name="phone" required>
+						<input type="text" class="form-control" id="phone" placeholder="Enter your phone" name="phone" onchange="fphone(this)" required>
 					</div>
 					<div class="form-group">
 						<label for="subject">Subject: </label>
